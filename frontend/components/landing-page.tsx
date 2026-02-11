@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Upload, Sparkles, Download, Zap } from "lucide-react";
 
 interface LandingPageProps {
@@ -41,11 +43,14 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
               alt="Impact Reels logo" 
               className="w-40 h-30 rounded-lg"
             />
-            <span className="font-semibold text-lg text-foreground">Impact Reels</span>
-        </div>
-          <Button onClick={onGetStarted} size="sm">
-            Get Started
-          </Button>
+            <span className="font-bold text-2xl md:text-3xl text-foreground">Impact Reels</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button asChild size="sm" variant="outline">
+              <Link href="/about">About This Project</Link>
+            </Button>
+          </div>
         </div>
       </header>
 
