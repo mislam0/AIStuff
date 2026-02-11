@@ -38,21 +38,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`font-sans antialiased relative`}>
+      <body className="font-sans antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          {/* Animated Grid Background */}
-          <div className="grid-background" aria-hidden="true" />
-          <div className="grid-accent-glow" aria-hidden="true" />
-          
-          {/* Main Content */}
-          <div className="relative z-0">
-            {children}
-          </div>
+          {children}
         </ThemeProvider>
         
         <Analytics />
