@@ -61,7 +61,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             <span>AI-Powered Video Generation</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground text-balance">
+          <h1 className="font-bold tracking-tight text-foreground text-balance" style={{ fontSize: 'var(--jd-hero-font-size)' }}>
             Turn your media into
             <br />
             <span className="text-accent">highlight videos</span>
@@ -85,7 +85,8 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="p-6 rounded-xl bg-card border border-border hover:border-accent/50 transition-colors"
+                className="rounded-xl bg-card border border-border hover:border-accent/50 transition-colors"
+                style={{ padding: 'var(--jd-card-padding)' }}
               >
                 <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center mb-4">
                   <feature.icon className="w-5 h-5 text-accent" />

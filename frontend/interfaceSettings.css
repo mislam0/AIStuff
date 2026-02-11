@@ -1,0 +1,19 @@
+/* ============================================================
+   interfaceSettings.css
+   Global CSS file for mobile-friendly interface settings.
+   Uses Tailwind-compatible CSS custom properties (variables).
+   ============================================================ */
+
+/* ---- John Doe's variables ---- */
+
+/* Variable 1: Controls the font size for hero section headings,
+   using a responsive clamp() for mobile-friendly scaling */
+:root {
+  --jd-hero-font-size: clamp(1.75rem, 5vw, 3.75rem);
+}
+
+/* Variable 2: Controls the padding for feature cards,
+   using a responsive clamp() for mobile-friendly spacing */
+:root {
+  --jd-card-padding: clamp(1rem, 3vw, 1.5rem);
+}
