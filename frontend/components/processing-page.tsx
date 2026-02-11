@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Sparkles } from "lucide-react";
 
 interface ProcessingPageProps {
@@ -47,13 +48,16 @@ export function ProcessingPage({ onComplete }: ProcessingPageProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex items-center gap-2">
-          <img 
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <img 
               src="/logo.png" 
               alt="Impact Reels logo" 
               className="w-40 h-30 rounded-lg"
             />
-          <span className="font-semibold text-lg text-foreground">Impact Reels</span>
+            <span className="font-bold text-2xl md:text-3xl text-foreground">Impact Reels</span>
+          </div>
+          <ThemeToggle />
         </div>
       </header>
 

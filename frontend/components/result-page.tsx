@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { ArrowLeft, Download, RefreshCw, Sparkles, Play } from "lucide-react";
 import { useState } from "react";
 
@@ -15,18 +16,19 @@ export function ResultPage({ onBack, onRegenerate }: ResultPageProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={onBack}>
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={onBack}>
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
             <img 
               src="/logo.png" 
-              alt="Impact Reel logo" 
+              alt="Impact Reels logo" 
               className="w-40 h-30 rounded-lg"
             />
-            <span className="font-semibold text-lg text-foreground">Impact Reels</span>
+            <span className="font-bold text-2xl md:text-3xl text-foreground">Impact Reels</span>
           </div>
+          <ThemeToggle />
         </div>
       </header>
 
