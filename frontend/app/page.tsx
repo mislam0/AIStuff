@@ -10,46 +10,58 @@ type AppState = "landing" | "upload" | "processing" | "result";
 
 export default function Home() {
   const [state, setState] = useState<AppState>("landing");
-  const [, setUploadedFiles] = useState<File[]>([]);
-  const [, setEventDescription] = useState("");
+  const [resultVideo, setResultVideo] = useState<string | null>(null);
 
-  const handleGetStarted = () => {
-    setState("upload");
-  };
+  const handleGetStarted = () => setState("upload");
+  const handleBack = () => setState("landing");
+  const handleBackToUpload = () => setState("upload");
+  const handleRegenerate = () => setState("processing");
 
-  const handleBack = () => {
-    setState("landing");
-  };
+  const handleGenerate = async (files: File[], description: string) => {
+    setState("processing"); // SHOW LOADER
 
-  const handleGenerate = (files: File[], description: string) => {
-    setUploadedFiles(files);
-    setEventDescription(description);
-    setState("processing");
-  };
+    try {
+      const formData = new FormData();
 
-  const handleProcessingComplete = () => {
-    setState("result");
-  };
+      files.forEach((file) => {
+        formData.append("files", file);
+      });
 
-  const handleRegenerate = () => {
-    setState("processing");
-  };
+      formData.append("prompt", description);
 
-  const handleBackToUpload = () => {
-    setState("upload");
+      const response = await fetch("http://127.0.0.1:8000/create-highlight", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      setResultVideo(`http://127.0.0.1:8000/${data.output}`);
+
+      setState("result"); // SHOW RESULT WHEN DONE
+    } catch (error) {
+      console.error(error);
+      alert("Error generating highlight");
+      setState("upload");
+    }
   };
 
   return (
     <>
       {state === "landing" && <LandingPage onGetStarted={handleGetStarted} />}
+
       {state === "upload" && (
         <UploadPage onBack={handleBack} onGenerate={handleGenerate} />
       )}
-      {state === "processing" && (
-        <ProcessingPage onComplete={handleProcessingComplete} />
-      )}
+
+      {state === "processing" && <ProcessingPage />}
+
       {state === "result" && (
-        <ResultPage onBack={handleBackToUpload} onRegenerate={handleRegenerate} />
+        <ResultPage
+          videoUrl={resultVideo}
+          onBack={handleBackToUpload}
+          onRegenerate={handleRegenerate}
+        />
       )}
     </>
   );

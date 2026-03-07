@@ -62,21 +62,21 @@ export function UploadPage({ onBack, onGenerate }: UploadPageProps) {
       <header className="border-b border-border">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" onClick={onBack}>
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
             <img 
               src="/logo.png" 
               alt="Impact Reels logo" 
               className="w-40 h-30 rounded-lg"
             />
-            <span className="font-bold text-2xl md:text-3xl text-foreground">Impact Reels</span>
+            <span className="font-bold text-2xl md:text-5xl text-foreground">Impact Reels</span>
           </div>
           <ThemeToggle />
         </div>
       </header>
 
       <main className="flex-1 container mx-auto px-4 py-8 max-w-2xl">
+         <Button variant="ghost" size="icon" onClick={onBack}>
+              <ArrowLeft className="w-8 h-8" />
+            </Button>
         <div className="space-y-8">
           <div className="text-center space-y-2">
             <h1 className="text-2xl md:text-3xl font-bold text-foreground">Upload Your Media</h1>

@@ -1,0 +1,32 @@
+Global CSS file:
+interfaceSettings.css
+Path: src/app/interfaceSettings.css
+
+David implemented the following global variables:
+
+--home-card-radius
+Used on: feature cards on the home page (landing-page.tsx)
+
+--home-feature-gap
+Used on: feature grid spacing on the home page (landing-page.tsx)
+
+Dino implemented the following global variables:
+--about-card-padding
+Used on : About page cards for consistent padding (about/page.tsx)
+--about-card-radius
+Used on: About page cars for rounded corners (about/page.tsx)
+--about-feature-gap
+Used on: feature grid spacing on the About page (about/page.tsx)
+
+Rahsun implemented these variables:
+ --touch-target-min: 3rem; //Miniumum size fr buttons on larger devices
+// Added to help with visibility for smaller devices
+   --touch-target-size: 2.5rem;
+  --button-height: 2.5rem;
+  --input-height: 2.5rem;
+
+
+Mohammed implemented these variables :
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --font-bold text-2xl md:text-5xl text-foreground truncate (changing Impact Reel's text size in all pages)

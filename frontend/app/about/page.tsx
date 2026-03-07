@@ -5,31 +5,31 @@ import { ArrowLeft, Upload, Sparkles, Download, Zap, Heart } from "lucide-react"
 
 export default function AboutPage() {
   const features = [
-    {
-      icon: Upload,
-      title: "Upload Multiple Files",
-      description:
-        "Drag and drop any combination of photos and videos from your event. We support all major image and video formats so you can upload everything in one go.",
-    },
-    {
-      icon: Sparkles,
-      title: "AI-Powered Selection",
-      description:
-        "Our AI analyzes every piece of media you upload, identifies the most compelling moments, and intelligently selects the best content to feature in your highlight reel.",
-    },
-    {
-      icon: Download,
-      title: "Export and Share",
-      description:
-        "Once your highlight video is generated, download it instantly as a high-quality MP4 file ready to share on social media, in presentations, or with your community.",
-    },
-    {
-      icon: Zap,
-      title: "No Editing Skills Required",
-      description:
-        "You don't need any video editing experience. Simply upload your media, add an optional description, and let the AI handle the rest. It's that simple.",
-    },
-  ];
+  {
+    icon: Upload,
+    title: "Upload Multiple Files",
+    description:
+      "Drag and drop any combination of photos and videos from your event. We support all major image and video formats so you can upload everything in one go.",
+  },
+  {
+    icon: Sparkles,
+    title: "AI-Powered Selection",
+    description:
+      "Our AI analyzes every piece of media you upload, identifies the most compelling moments, and intelligently selects the best content to feature in your highlight reel.",
+  },
+  {
+    icon: Download,
+    title: "Export and Share",
+    description:
+      "Once your highlight video is generated, download it instantly as a high-quality MP4 file ready to share on social media, in presentations, or with your community.",
+  },
+  {
+    icon: Zap,
+    title: "No Editing Skills Required",
+    description:
+      "You don't need any video editing experience. Simply upload your media, add an optional description, and let the AI handle the rest. It's that simple.",
+  },
+];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -67,7 +67,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="p-6 rounded-xl bg-card border border-border space-y-4">
+          <div className="about-card bg-card border border-border space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
                 <Heart className="w-5 h-5 text-accent" />
@@ -95,11 +95,11 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-foreground text-center">
               How It Works
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="about-feature-grid grid grid-cols-1 md:grid-cols-2">
               {features.map((feature) => (
                 <div
                   key={feature.title}
-                  className="p-6 rounded-xl bg-card border border-border hover:border-accent/50 transition-colors"
+                   className="about-card bg-card border border-border hover:border-accent/50 transition-colors"
                 >
                   <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center mb-4">
                     <feature.icon className="w-5 h-5 text-accent" />
@@ -115,7 +115,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="p-6 rounded-xl bg-card border border-border space-y-4">
+          <div className="about-card bg-card border border-border space-y-4">
             <h2 className="text-xl font-semibold text-foreground">
               The Process
             </h2>

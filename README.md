@@ -93,7 +93,23 @@ Optional / Supporting:
 ```
 
 ---
+## Current Sprint Status
 
+Sprint Goal:
+Implement core upload → processing pipeline UI and job flow.
+
+Completed:
+- Next.js frontend setup
+- Initial upload UI
+- Basic project architecture defined
+
+In Progress:
+- S3 upload integration
+
+
+Next:
+- n8n + FFmpeg processing pipeline
+---
 ## Installation Steps
 
 (To be added later)
