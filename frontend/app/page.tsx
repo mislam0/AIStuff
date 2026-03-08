@@ -17,7 +17,7 @@ export default function Home() {
   const handleBackToUpload = () => setState("upload");
   const handleRegenerate = () => setState("processing");
 
-  const handleGenerate = async (files: File[], description: string) => {
+  const handleGenerate = async (files: File[], description: string, targetDuration: number = 60) => {
     setState("processing"); // SHOW LOADER
 
     try {
@@ -28,6 +28,7 @@ export default function Home() {
       });
 
       formData.append("prompt", description);
+      formData.append("target_duration", targetDuration.toString());
 
       const response = await fetch("http://127.0.0.1:8000/create-highlight", {
         method: "POST",
@@ -36,12 +37,16 @@ export default function Home() {
 
       const data = await response.json();
 
+      if (!data.success) {
+        throw new Error(data.detail || "Failed to create highlight");
+      }
+
       setResultVideo(`http://127.0.0.1:8000/${data.output}`);
 
       setState("result"); // SHOW RESULT WHEN DONE
     } catch (error) {
       console.error(error);
-      alert("Error generating highlight");
+      alert("Error generating highlight: " + (error instanceof Error ? error.message : "Unknown error"));
       setState("upload");
     }
   };

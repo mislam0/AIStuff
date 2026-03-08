@@ -6,17 +6,27 @@ import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { ArrowLeft, Upload, X, FileImage, FileVideo, Sparkles } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { ArrowLeft, Upload, X, FileImage, FileVideo, Sparkles, Wand2 } from "lucide-react";
 
 interface UploadPageProps {
   onBack: () => void;
-  onGenerate: (files: File[], description: string) => void;
+  onGenerate: (files: File[], description: string, targetDuration: number) => void;
 }
+
+const EDITING_PRESETS = [
+  { label: "Fast-paced highlights", prompt: "Create a fast-paced highlight reel with quick cuts, focusing on the most exciting and energetic moments" },
+  { label: "Cinematic montage", prompt: "Create a cinematic montage with smooth transitions, focusing on visually stunning moments and emotional beats" },
+  { label: "Best moments compilation", prompt: "Select and compile the best moments with high activity, interesting scenes, and audio peaks" },
+  { label: "Action-focused", prompt: "Focus on high-action segments with lots of movement, scene changes, and dynamic energy" },
+];
 
 export function UploadPage({ onBack, onGenerate }: UploadPageProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [description, setDescription] = useState("");
   const [isDragging, setIsDragging] = useState(false);
+  const [targetDuration, setTargetDuration] = useState(60);
+  const [selectedPreset, setSelectedPreset] = useState<number | null>(null);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -153,26 +163,78 @@ export function UploadPage({ onBack, onGenerate }: UploadPageProps) {
             </div>
           )}
 
+          {/* AI Editing Presets */}
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-foreground flex items-center gap-2">
+              <Wand2 className="w-4 h-4 text-accent" />
+              Quick Editing Styles
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {EDITING_PRESETS.map((preset, index) => (
+                <Button
+                  key={index}
+                  variant={selectedPreset === index ? "default" : "outline"}
+                  size="sm"
+                  className="text-xs h-auto py-2 px-3"
+                  onClick={() => {
+                    setSelectedPreset(index);
+                    setDescription(preset.prompt);
+                  }}
+                >
+                  {preset.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+
           <div className="space-y-3">
             <label htmlFor="description" className="text-sm font-medium text-foreground">
-              Describe your event (optional)
+              Describe how you want your video edited
             </label>
             <Textarea
               id="description"
-              placeholder="e.g., Annual charity fundraiser, community picnic, volunteer appreciation day..."
+              placeholder="e.g., Create a highlight reel focusing on the most exciting moments with quick cuts and energetic pacing..."
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => {
+                setDescription(e.target.value);
+                setSelectedPreset(null);
+              }}
               className="min-h-24 bg-input border-border text-foreground placeholder:text-muted-foreground"
             />
+            <p className="text-xs text-muted-foreground">
+              The AI will analyze your videos and select the best segments based on your description
+            </p>
+          </div>
+
+          {/* Target Duration Slider */}
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-foreground">
+              Target Duration: {targetDuration} seconds
+            </label>
+            <Slider
+              value={[targetDuration]}
+              onValueChange={(value) => setTargetDuration(value[0])}
+              min={15}
+              max={180}
+              step={5}
+              className="w-full"
+            />
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>15s</span>
+              <span>60s</span>
+              <span>120s</span>
+              <span>180s</span>
+            </div>
           </div>
 
           <Button
             size="lg"
             className="w-full text-lg py-6"
             disabled={files.length === 0}
-            onClick={() => onGenerate(files, description)}
+            onClick={() => onGenerate(files, description, targetDuration)}
           >
-            Generate Highlight Video
+            <Sparkles className="w-5 h-5 mr-2" />
+            Generate AI Highlight Video
           </Button>
         </div>
       </main>
