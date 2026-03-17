@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react"
-
+import React from "react";
 import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ArrowLeft, Upload, X, FileImage, FileVideo, Sparkles } from "lucide-react";
+
 
 interface UploadPageProps {
   onBack: () => void;
@@ -14,6 +14,7 @@ interface UploadPageProps {
 }
 
 export function UploadPage({ onBack, onGenerate }: UploadPageProps) {
+
   const [files, setFiles] = useState<File[]>([]);
   const [description, setDescription] = useState("");
   const [isDragging, setIsDragging] = useState(false);
@@ -31,9 +32,11 @@ export function UploadPage({ onBack, onGenerate }: UploadPageProps) {
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
+
     const droppedFiles = Array.from(e.dataTransfer.files).filter(
       (file) => file.type.startsWith("image/") || file.type.startsWith("video/")
     );
+
     setFiles((prev) => [...prev, ...droppedFiles]);
   }, []);
 
@@ -42,6 +45,7 @@ export function UploadPage({ onBack, onGenerate }: UploadPageProps) {
       const selectedFiles = Array.from(e.target.files).filter(
         (file) => file.type.startsWith("image/") || file.type.startsWith("video/")
       );
+
       setFiles((prev) => [...prev, ...selectedFiles]);
     }
   }, []);
@@ -59,123 +63,182 @@ export function UploadPage({ onBack, onGenerate }: UploadPageProps) {
 
   return (
     <div className="min-h-screen flex flex-col">
+
+      {/* HEADER */}
       <header className="border-b border-border">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+
           <div className="flex items-center gap-2">
-            <img 
-              src="/logo.png" 
-              alt="Impact Reels logo" 
-              className="w-40 h-30 rounded-lg"
+            <img
+              src="/logo.png"
+              alt="Impact Reels logo"
+              className="w-40 h-auto rounded-lg"
             />
-            <span className="font-bold text-2xl md:text-5xl text-foreground">Impact Reels</span>
+
+            <span className="font-bold text-2xl md:text-5xl text-foreground">
+              Impact Reels
+            </span>
           </div>
+
           <ThemeToggle />
         </div>
       </header>
 
-      <main className="flex-1 container mx-auto px-4 py-8 max-w-2xl">
-         <Button variant="ghost" size="icon" onClick={onBack}>
-              <ArrowLeft className="w-8 h-8" />
-            </Button>
-        <div className="space-y-8">
-          <div className="text-center space-y-2">
-            <h1 className="text-2xl md:text-3xl font-bold text-foreground">Upload Your Media</h1>
-            <p className="text-muted-foreground">
-              Add photos and videos from your event
-            </p>
-          </div>
+      {/* BACKGROUND */}
+      <div className="page-background flex-1">
 
-          <div
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            className={`
-              border-2 border-dashed rounded-xl p-12 text-center transition-colors cursor-pointer
-              ${isDragging ? "border-accent bg-accent/10" : "border-border hover:border-muted-foreground"}
-            `}
-            onClick={() => document.getElementById("file-input")?.click()}
-          >
-            <input
-              id="file-input"
-              type="file"
-              multiple
-              accept="image/*,video/*"
-              onChange={handleFileSelect}
-              className="hidden"
-            />
-            <div className="flex flex-col items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center">
-                <Upload className="w-8 h-8 text-muted-foreground" />
-              </div>
-              <div>
-                <p className="font-medium text-foreground">
-                  Drag and drop files here
-                </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  or click to browse
-                </p>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Supports images and videos
-              </p>
-            </div>
-          </div>
+        <main className="container mx-auto px-4 py-8 max-w-2xl">
 
-          {files.length > 0 && (
-            <div className="space-y-3">
-              <p className="text-sm font-medium text-foreground">
-                {files.length} file{files.length !== 1 && "s"} selected
-              </p>
-              <div className="space-y-2 max-h-48 overflow-y-auto">
-                {files.map((file, index) => (
-                  <div
-                    key={`${file.name}-${index}`}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-card border border-border"
-                  >
-                    {getFileIcon(file)}
-                    <span className="flex-1 text-sm text-foreground truncate">
-                      {file.name}
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      {(file.size / 1024 / 1024).toFixed(1)} MB
-                    </span>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8"
-                      onClick={() => removeFile(index)}
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="space-y-3">
-            <label htmlFor="description" className="text-sm font-medium text-foreground">
-              Describe your event (optional)
-            </label>
-            <Textarea
-              id="description"
-              placeholder="e.g., Annual charity fundraiser, community picnic, volunteer appreciation day..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="min-h-24 bg-input border-border text-foreground placeholder:text-muted-foreground"
-            />
-          </div>
-
+          {/* BACK BUTTON */}
           <Button
-            size="lg"
-            className="w-full text-lg py-6"
-            disabled={files.length === 0}
-            onClick={() => onGenerate(files, description)}
+            variant="ghost"
+            size="icon"
+            className="cursor-pointer mb-4"
+            onClick={onBack}
           >
-            Generate Highlight Video
+            <ArrowLeft className="w-8 h-8" />
           </Button>
-        </div>
-      </main>
+
+          <div className="space-y-8">
+
+            {/* TITLE */}
+            <div className="text-center space-y-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+                Upload Your Media
+              </h1>
+
+              <p className="text-muted-foreground">
+                Add photos and videos from your event
+              </p>
+            </div>
+
+            {/* DROP ZONE */}
+            <div
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`
+                border-2 border-dashed rounded-xl p-12 text-center transition-all cursor-pointer
+                bg-card shadow-sm hover:shadow-md hover:scale-[1.01]
+                ${isDragging ? "border-accent bg-accent/10" : "border-border hover:border-accent"}
+              `}
+              onClick={() => document.getElementById("file-input")?.click()}
+            >
+              <input
+                id="file-input"
+                type="file"
+                multiple
+                accept="image/*,video/*"
+                onChange={handleFileSelect}
+                className="hidden"
+              />
+
+              <div className="flex flex-col items-center gap-4">
+
+                <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center">
+                  <Upload className="w-8 h-8 text-muted-foreground" />
+                </div>
+
+                <div>
+                  <p className="font-medium text-foreground">
+                    Drag and drop files here
+                  </p>
+
+                  <p className="text-sm text-muted-foreground mt-1">
+                    or click to browse
+                  </p>
+                </div>
+
+                <p className="text-xs text-muted-foreground">
+                  Supports images and videos
+                </p>
+
+              </div>
+            </div>
+
+            {/* FILE LIST */}
+            {files.length > 0 && (
+              <div className="space-y-3">
+
+                <p className="text-sm font-medium text-foreground">
+                  {files.length} file{files.length !== 1 && "s"} selected
+                </p>
+
+                <div className="space-y-2 max-h-48 overflow-y-auto">
+
+                  {files.map((file, index) => (
+                    <div
+                      key={`${file.name}-${index}`}
+                      className="flex items-center gap-3 p-3 rounded-lg bg-card border border-border"
+                    >
+
+                      {getFileIcon(file)}
+
+                      <span className="flex-1 text-sm text-foreground truncate">
+                        {file.name}
+                      </span>
+
+                      <span className="text-xs text-muted-foreground">
+                        {(file.size / 1024 / 1024).toFixed(1)} MB
+                      </span>
+
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 cursor-pointer"
+                        onClick={() => removeFile(index)}
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+
+                    </div>
+                  ))}
+
+                </div>
+
+                {/* RESET FILES */}
+                <Button
+                  variant="outline"
+                  className="w-full cursor-pointer"
+                  onClick={() => setFiles([])}
+                >
+                  Upload Different Files
+                </Button>
+
+              </div>
+            )}
+
+            {/* DESCRIPTION CARD */}
+            <div className="space-y-3 bg-card border border-border rounded-xl p-4 shadow-sm">
+
+              <label className="text-sm font-medium text-foreground">
+                Describe your event (optional)
+              </label>
+
+              <Textarea
+                placeholder="e.g., Annual charity fundraiser, community picnic..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="min-h-24 bg-card border border-border rounded-lg p-3 text-foreground placeholder:text-muted-foreground"
+              />
+
+            </div>
+
+            {/* GENERATE BUTTON */}
+            <Button
+              size="lg"
+              className="w-full text-lg py-6 cursor-pointer transition-all hover:scale-[1.02] hover:bg-accent hover:text-accent-foreground"
+              disabled={files.length === 0}
+              onClick={() => onGenerate(files, description)}
+            >
+              <Sparkles className="w-5 h-5 mr-2" />
+              Generate Highlight Video
+            </Button>
+
+          </div>
+        </main>
+
+      </div>
     </div>
   );
 }

@@ -76,35 +76,35 @@ Priority scale:
 
 
 
-\### FR-8 Processing pipeline (upload → analyze → simple cut → export)
+\### FR-8 Automatic scene detection
 
 \- Priority: P0  
 
-\- Justification: Represents Phase 1 foundation of the project.
+\- Justification: Scenes must be identified to create highlights
 
 
 
-\### FR-9 Store inputs and outputs in Amazon S3
-
-\- Priority: P0  
-
-\- Justification: Client-provided storage solution.
-
-
-
-\### FR-10 Display job status (processing / completed / failed)
+\### FR-9 Highlight selection using ML model
 
 \- Priority: P0  
 
-\- Justification: Users need visibility into generation progress.
+\- Justification: AI-based ranking determines which scenes become highlights
 
 
 
-\### FR-11 Basic template styling
+\### FR-10 Video assemply pipeline
 
-\- Priority: P1  
+\- Priority: P0  
 
-\- Justification: Improves perceived quality of generated videos.
+\- Justification: Clips must be processed and combined into a final highlight video.
+
+
+
+\### FR-11 Store input and output media
+
+\- Priority: P0 
+
+\- Justification: Uploaded files and generated videos must be persisted for retrieval.
 
 
 
@@ -236,7 +236,7 @@ Priority scale:
 
 
 
-\### IC-1 Angular frontend
+\### IC-1 React frontend
 
 \- Priority: P0  
 
@@ -244,11 +244,11 @@ Priority scale:
 
 
 
-\### IC-2 Node.js backend with TypeScript
+\### IC-2 FastAPI Python backend
 
 \- Priority: P0  
 
-\- Justification: Aligns with Angular and supports scalable APIs.
+\- Justification: Provides API endpoints for upload and processing.
 
 
 
@@ -260,19 +260,27 @@ Priority scale:
 
 
 
-\### IC-4 Amazon S3 for storage
+\### IC-4 MoviePy video manipulation
 
 \- Priority: P0  
 
-\- Justification: Client-provided infrastructure.
+\- Justification: Simplifies clip extraction and composition.
 
 
 
-\### IC-5 n8n workflow orchestration
+\### IC-5 MinIO object storage
 
 \- Priority: P0  
 
-\- Justification: Team will use n8n for automation.
+\- Justification: Provides S3-compatible media storage.
+
+
+
+\### IC-6 Python ML model for highlight selection
+
+\- Priority: P0  
+
+\- Justification: Determines which scenes are most relevant.
 
 
 
@@ -281,6 +289,7 @@ Priority scale:
 \- Priority: P1
 
 \- Justification: Simplifies MVP user management if required.
+
 
 
 

@@ -10,6 +10,17 @@ Used on: feature cards on the home page (landing-page.tsx)
 --home-feature-gap
 Used on: feature grid spacing on the home page (landing-page.tsx)
 
+
+
+
+Mohammed implmented the following:
+
+Template of the frontend before any changes whatsoever, and changing the original main color being green black and white to yellow black and white (Green throughout the CSS replaced with yellow)
+
+Assisting to creating the light/dark mode, and the about us page
+
+"Impact Reels" text enlarged. Changed from text-lg font-semibold to text-2xl md:text-3xl font-bold across all four pages (landing, upload, processing, result) so it's proportionate to the logo
+
 Dino implemented the following global variables:
 --about-card-padding
 Used on : About page cards for consistent padding (about/page.tsx)
@@ -30,3 +41,4 @@ Mohammed implemented these variables :
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --font-bold text-2xl md:text-5xl text-foreground truncate (changing Impact Reel's text size in all pages)
+

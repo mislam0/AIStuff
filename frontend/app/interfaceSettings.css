@@ -3,30 +3,35 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* -------------------------------- */
+/* ROOT THEME VARIABLES */
+/* -------------------------------- */
+
 :root {
   --background: oklch(0.98 0 0);
   --foreground: oklch(0.13 0 0);
+
   --card: oklch(0.96 0 0);
   --card-foreground: oklch(0.13 0 0);
+
   --popover: oklch(0.98 0 0);
   --popover-foreground: oklch(0.13 0 0);
+
   --primary: oklch(0.13 0 0);
   --primary-foreground: oklch(0.98 0 0);
+
   --secondary: oklch(0.92 0 0);
   --secondary-foreground: oklch(0.13 0 0);
+
   --muted: oklch(0.92 0 0);
   --muted-foreground: oklch(0.40 0 0);
+
   --accent: #F3BD1C;
   --accent-foreground: oklch(0.13 0 0);
-  /* Dino - About page global variables */
-  --about-card-padding:1.5rem;
-  --about-card-radius:1rem;
-  --about-feature-gap:1rem; 
-  /* ----------------------------------- */
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.98 0 0);
+
   --border: oklch(0.88 0 0);
   --input: oklch(0.92 0 0);
+
   --ring: #F3BD1C;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: #F3BD1C;
@@ -42,125 +47,226 @@
   --sidebar-accent-foreground: oklch(0.13 0 0);
   --sidebar-border: oklch(0.88 0 0);
   --sidebar-ring: #F3BD1C;
-  /* David – UI global variables */
 
+
+  --ring: #F3BD1C;
+
+  --radius: 0.75rem;
+
+  --home-card-radius: 1rem;
+  --home-feature-gap: 1rem;
+
+  --about-card-padding: 1.5rem;
+  --about-card-radius: 1rem;
+  --about-feature-gap: 1rem;
 }
 
+/* -------------------------------- */
+/* DARK MODE */
+/* -------------------------------- */
 
 .dark {
   --background: oklch(0.13 0 0);
   --foreground: oklch(0.98 0 0);
+
   --card: oklch(0.18 0 0);
   --card-foreground: oklch(0.98 0 0);
+
   --popover: oklch(0.18 0 0);
   --popover-foreground: oklch(0.98 0 0);
+
   --primary: oklch(0.98 0 0);
   --primary-foreground: oklch(0.13 0 0);
+
   --secondary: oklch(0.22 0 0);
   --secondary-foreground: oklch(0.98 0 0);
+
   --muted: oklch(0.22 0 0);
   --muted-foreground: oklch(0.85 0 0);
+
   --accent: #F3BD1C;
-  --accent-foreground: oklch(0.13 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.98 0 0);
+
   --border: oklch(0.28 0 0);
   --input: oklch(0.22 0 0);
+
   --ring: #F3BD1C;
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: #F3BD1C;
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.18 0 0);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.98 0 0);
-  --sidebar-primary-foreground: oklch(0.13 0 0);
-  --sidebar-accent: oklch(0.22 0 0);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.28 0 0);
-  --sidebar-ring: #F3BD1C;
 }
 
+/* -------------------------------- */
+/* TAILWIND THEME MAPPING */
+/* -------------------------------- */
+
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
+
   --color-border: var(--border);
   --color-input: var(--input);
+
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
+
+/* -------------------------------- */
+/* BASE STYLES */
+/* -------------------------------- */
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
-/* David – UI global variables */
 
-:root {
-  --home-card-radius: 1rem;
-  --home-feature-gap: 1rem;
-}
+/* -------------------------------- */
+/* SUBTLE PAGE BACKGROUND */
+/* -------------------------------- */
 
-/* Mobile-friendly overrides */
-@media (max-width: 768px) {
-  :root {
-    --home-card-radius: 0.75rem;
-    --home-feature-gap: 1rem; /* keep spacing comfy on phones */
-  }
-}
-/* Dino - About page global variables */
-.about-card {
-  padding: var(--about-card-padding);
-  border-radius: var(--about-card-radius);
-}
-.about-feature-grid {
-  gap: var(--about-feature-gap);
+.page-background {
+  position: relative;
 }
 
-/* Elements using the variables on the home page */
+.page-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+    radial-gradient(
+      900px circle at 50% -10%,
+      rgba(243,189,28,0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      800px circle at 50% 110%,
+      rgba(243,189,28,0.12),
+      transparent 60%
+    );
+}
+
+.dark .page-background::before {
+  background:
+    radial-gradient(
+      900px circle at 50% -10%,
+      rgba(243,189,28,0.12),
+      transparent 60%
+    ),
+    radial-gradient(
+      800px circle at 50% 110%,
+      rgba(243,189,28,0.08),
+      transparent 60%
+    );
+}
+
+/* -------------------------------- */
+/* FEATURE CARDS */
+/* -------------------------------- */
 
 .home-feature-card {
   border-radius: var(--home-card-radius);
   min-height: 9.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  transition: transform .15s ease;
 }
+
+.home-feature-card:hover {
+  transform: translateY(-3px);
+}
+
+.dark .home-feature-card {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* -------------------------------- */
+/* FEATURE GRID */
+/* -------------------------------- */
 
 .home-feature-grid {
   gap: var(--home-feature-gap);
+}
+
+
+/* -------------------------------- */
+/* UPLOAD BOX */
+/* -------------------------------- */
+
+.upload-box {
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+  padding: 3rem;
+  background: var(--card);
+  transition: border-color .2s ease;
+}
+
+.upload-box:hover {
+  border-color: var(--accent);
+}
+
+/* -------------------------------- */
+/* ABOUT PAGE */
+/* -------------------------------- */
+
+.about-card {
+  padding: var(--about-card-padding);
+  border-radius: var(--about-card-radius);
+}
+
+.about-feature-grid {
+  gap: var(--about-feature-gap);
+}
+
+
+/* -------------------------------- */
+/* BACK ARROW ALIGNMENT */
+/* -------------------------------- */
+
+.back-arrow-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* -------------------------------- */
+/* MOBILE ADJUSTMENTS */
+/* -------------------------------- */
+
+@media (max-width: 768px) {
+  :root {
+    --home-card-radius: 0.75rem;
+  }
+
+  section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .upload-box {
+    padding: 2rem;
+  }
 }

@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+ffmpeg-python
+opencv-python-headless
+numpy
+scikit-learn
+joblib
+minio

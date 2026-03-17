@@ -1,182 +1,153 @@
-\# Requirements Report (1–2 pages) — AI-Powered Highlight Video Generator (MVP)
+# Requirements Report (1–2 pages) — AI-Powered Highlight Video Generator (MVP)
 
+## 1. Project Overview
 
+This project develops an AI-powered Highlight Video Generator for nonprofits and community organizations. The system allows users to upload event media (photos and/or videos), optionally provide a short description of the desired editing style, and receive a polished highlight video between **30 and 60 seconds** in length.
 
-\## 1. Project Overview
+The system functions similarly to automated editing tools such as CapCut’s AutoCut feature, but it is **not a conversational AI system**. Users provide media and an optional prompt, and the system processes the content to produce a downloadable highlight video.
 
-This project will develop an AI-powered Highlight Video Generator for nonprofits and community organizations. The MVP allows a user to upload media (photos and/or videos), provide a short description of how they want the final edit to look, and receive a polished highlight video between 30 and 60 seconds. The workflow is similar to “auto cut” tools (such as CapCut’s autocut feature), but the product is not a chatbot—there is no conversational interaction. The system takes user inputs (media + prompt) and produces a downloadable video.
+The application focuses on providing a **simple and automated editing workflow** so organizations with little technical experience can quickly generate promotional videos from event media.
 
+---
 
+## 2. Goals and Scope (MVP)
 
-\## 2. Goals and Scope (MVP)
+### Primary MVP Goal
 
+Develop a working prototype of the **automated highlight generation pipeline**:
 
+Upload → Scene Detection → Highlight Selection → Video Assembly → Export
 
-\### Primary MVP goal
+### In-Scope for MVP
 
-Create a working prototype for the “AI Cut Engine” pipeline:
+* Upload up to **10 media files** (photos and/or videos)
+* Enforce **maximum file size limits** per upload
+* Accept an optional **text prompt** describing the desired style
+* Automatically detect scenes within uploaded videos
+* Select highlight segments using a simple AI/ML model
+* Generate a **30–60 second highlight video**
+* Export output as **MP4 format**
+* Allow users to **download the generated video**
+* Store uploaded media and generated output in **MinIO object storage**
+* Display **processing status** (processing / completed / failed)
+* Provide a **clean and lightweight web interface**
 
+### Out-of-Scope for MVP
 
+The following features are excluded from the initial prototype:
 
-Upload → Analysis → Simple Cut → Export (30–60 seconds)
+* Audio processing or music synchronization
+* Queue systems for large numbers of simultaneous jobs
+* Content moderation systems
+* Advanced timeline editing controls
+* Direct social media publishing
+* Caption or subtitle generation
 
+These features may be explored in future iterations.
 
+---
 
-\### In-scope for MVP
+## 3. Users and Use Cases
 
-\- Upload up to \*\*10 media files\*\* (photos and/or videos)
+### Target Users
 
-\- Enforce a \*\*maximum file size per upload\*\* to avoid overwhelming storage
+The primary users are **staff and volunteers at nonprofits and community organizations** who need a fast and simple way to produce highlight videos for promotion, fundraising, or event recaps.
 
-\- User provides a text prompt (minimal or detailed) describing desired edit style
+### Primary Use Case
 
-\- Server-side processing selects and arranges clips into a 30–60 second highlight video
+1. User uploads up to 10 photos and/or videos
+2. User optionally enters a short prompt describing the desired style
+3. System analyzes the media and selects highlight scenes
+4. System generates a 30–60 second highlight video
+5. User downloads the final video output
 
-\- Export output in common formats (at minimum MP4; MOV optional)
+---
 
-\- Allow user to \*\*download/export\*\* the generated video
+## 4. Assumptions and Constraints
 
-\- Store uploaded media and generated output in client-provided Amazon S3
+* Media files will be stored in **MinIO S3-compatible object storage**
+* Frontend will be built using **Next.js / React**
+* Backend services will be implemented using **FastAPI (Python)**
+* **FFmpeg and MoviePy** will be used for video cutting and assembly
+* **PySceneDetect** will detect scene boundaries in uploaded videos
+* A **Python machine learning model** will assist with highlight selection
+* Output video will be **silent for the MVP**
+* Upload limits will be enforced (maximum 10 media files)
+* File size limits will be enforced to control resource usage
 
-\- Provide basic processing status (processing / completed / failed)
+---
 
-\- Lightweight, simple, and visually clean web UI for ease of use
+## 5. Platform and Framework Selection
 
+The system will use the following technology stack:
 
+Frontend:
 
-\### Out-of-scope for MVP
+* Next.js (React)
+* TypeScript
+* HTML / CSS
 
-\- Audio support (video will be silent for MVP)
+Backend:
 
-\- Queue system for multiple concurrent requests
+* FastAPI (Python)
 
-\- Moderation system
+Video Processing:
 
-\- Advanced timeline editing UI
+* FFmpeg
+* MoviePy
 
-\- Direct social media publishing
+AI / Scene Analysis:
 
+* PySceneDetect
+* Python highlight selection model
 
+Storage:
 
-These features may be considered in later phases.
+* MinIO (S3-compatible object storage)
 
+This architecture supports rapid MVP development while enabling the team to gain experience with modern web frameworks, AI processing pipelines, and media processing systems.
 
+---
 
-\## 3. Users and Use Cases
+## 6. Functional Requirements Summary
 
+* Upload photos and videos (up to 10 files)
+* Accept optional user prompt
+* Detect scenes in uploaded videos
+* Select highlight segments automatically
+* Generate a **30–60 second silent highlight video**
+* Export/download output video
+* Store input and output media
+* Display processing status to the user
 
+---
 
-\### Target users
+## 7. Non-Functional Requirements Summary
 
-Staff or volunteers at nonprofits and community organizations who need fast, simple highlight videos for promotion, fundraising, or event recaps.
+* Secure storage and handling of uploaded media
+* Reliable processing pipeline with clear error reporting
+* Processing times should remain reasonable for MVP use (target under ~2 minutes)
+* Lightweight and visually simple web interface
+* Maintainable and modular architecture
 
+---
 
+## 8. Domain Requirements Summary
 
-\### Primary use case
+* Output video length must be **30–60 seconds**
+* The system is a **one-shot generation tool**, not conversational AI
+* Inputs may include **mixed media** (photos and videos)
+* Output is a **standard downloadable video file (MP4)**
 
-1\. User uploads up to 10 media files
+---
 
-2\. User enters a short prompt describing the desired style
+## 9. Risks and Open Questions
 
-3\. System processes the media and generates a 30–60 second highlight video
+* Optimal scene detection thresholds may require tuning
+* Highlight ranking model may require additional training data
+* File size limits may need adjustment based on performance testing
+* Future versions may introduce audio processing or caption generation
 
-4\. User downloads the final output
+These issues will be evaluated and refined as development continues.
 
-
-
-\## 4. Assumptions and Constraints
-
-\- Client provides access to an Amazon S3 bucket for storage
-
-\- Frontend will be built using Angular (TypeScript, HTML, CSS)
-
-\- Backend services will use Node.js
-
-\- FFmpeg will be used for video cutting and exporting
-
-\- n8n will be used for workflow orchestration
-
-\- Supabase may be used for authentication and metadata storage if user accounts are required
-
-\- Audio is not required for MVP
-
-\- No queue system or moderation is required for MVP
-
-\- Upload limits will be enforced (maximum 10 media files and capped file size)
-
-
-
-\## 5. Platform and Framework Selection
-
-The team will use the following technologies:
-
-\- Angular for frontend UI
-
-\- Node.js with TypeScript for backend APIs
-
-\- FFmpeg for video processing
-
-\- Amazon S3 for storage (client-provided)
-
-\- n8n for workflow automation
-
-\- Supabase DB for authentication and metadata
-
-
-
-This stack supports rapid MVP development while allowing team members to gain experience with modern web frameworks, cloud storage, asynchronous processing, and media pipelines.
-
-
-
-\## 6. Functional Requirements Summary
-
-\- Upload photos and videos (up to 10 files)
-
-\- Accept user text prompt
-
-\- Generate a 30–60 second silent highlight video
-
-\- Export/download output video
-
-\- Store inputs and outputs in S3
-
-\- Display processing status
-
-
-
-\## 7. Non-Functional Requirements Summary
-
-\- Secure storage and access control for uploaded media
-
-\- Reasonable processing time for MVP usage
-
-\- Clear error handling and feedback
-
-\- Lightweight, simple, and visually appealing web interface
-
-\- Maintainable modular architecture
-
-
-
-\## 8. Domain Requirements Summary
-
-\- Output video length must be between 30 and 60 seconds
-
-\- System operates as a one-shot generator (not conversational)
-
-\- Inputs may include mixed media (photos and videos)
-
-\- Output is a standard downloadable video file
-
-
-
-\## 9. Risks and Open Questions
-
-\- Exact file size limits still need to be finalized
-
-\- Template design and styling expectations need confirmation
-
-
-
-These items will be clarified with the client as development progresses.
 
