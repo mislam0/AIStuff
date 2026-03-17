@@ -37,11 +37,15 @@ export default function Home() {
 
       const data = await response.json();
 
+<<<<<<< HEAD
       if (!data.success) {
         throw new Error(data.detail || "Failed to create highlight");
       }
 
       setResultVideo(`http://127.0.0.1:8000/${data.output}`);
+=======
+      setResultVideo(data.video_url);
+>>>>>>> main
 
       setState("result"); // SHOW RESULT WHEN DONE
     } catch (error) {

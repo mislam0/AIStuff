@@ -1,5 +1,6 @@
 "use client";
 
+import VideoGallery from "./video-gallery";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ArrowLeft, Download, RefreshCw, Sparkles } from "lucide-react";
@@ -56,9 +57,13 @@ export function ResultPage({ videoUrl, onBack, onRegenerate }: ResultPageProps) 
           {/* VIDEO PREVIEW */}
           <div className="aspect-video bg-card border border-border rounded-xl overflow-hidden">
             {videoUrl ? (
-              <video controls className="w-full h-full">
-                <source src={videoUrl} type="video/mp4" />
-              </video>
+              <video
+                src={videoUrl || ""}
+                controls
+                autoPlay
+                preload="auto"
+                className="w-full h-full"
+              />
             ) : (
               <div className="flex items-center justify-center h-full text-muted-foreground">
                 No preview available
@@ -104,7 +109,10 @@ export function ResultPage({ videoUrl, onBack, onRegenerate }: ResultPageProps) 
           <p className="text-center text-sm text-muted-foreground">
             Not happy with the result? Try regenerating for a different edit.
           </p>
-
+          {/* VIDEO GALLERY */}
+          <div className="pt-8 border-t border-border">
+            <VideoGallery />
+          </div>
         </div>
       </main>
     </div>

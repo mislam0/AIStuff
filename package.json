@@ -1,9 +1,24 @@
 {
+  "name": "ai-video-generator",
+  "private": true,
+  "scripts": {
+  "dev": "concurrently \"npm run frontend\" \"npm run backend\" \"npm run minio\"",
+  "frontend": "cd frontend && npm run dev",
+  "backend": "cd ai_service && python -m uvicorn server:app --reload",
+  "minio": "cd storage && .\\minio.exe server .\\minio-data --console-address :9001"
+},
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",
+<<<<<<< HEAD
     "lucide-react": "^0.577.0",
     "multer": "^2.1.0",
     "react": "^19.2.4"
+=======
+    "multer": "^2.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+>>>>>>> main
   }
 }

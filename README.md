@@ -24,15 +24,33 @@ Frontend:
 - HTML
 - CSS
 
+<<<<<<< HEAD
+Backend:
+- FastAPI
+
+Video Processing
+- FFmpeg
+- MoviePy
+=======
+<<<<<<< HEAD
 Backend / Processing:
 - Node.js
 - FFmpeg
+=======
+Backend:
+- FastAPI
+
+Video Processing
+- FFmpeg
+- MoviePy
+>>>>>>> bb4f42a37edca08f2781aee283a64f9d5aaa3c3f
+>>>>>>> main
 
 Automation / Workflow:
 - n8n
 
 Storage:
-- Amazon S3 (client-provided)
+- MinIO
 
 Optional / Supporting:
 - Supabase (authentication and metadata)
@@ -47,7 +65,15 @@ Optional / Supporting:
 - Automatic generation of 30–60 second highlight video
 - Silent video output (audio not included in MVP)
 - Download/export generated video
+<<<<<<< HEAD
+- Media stored using MinIO object storage
+=======
+<<<<<<< HEAD
 - Storage of input and output media in Amazon S3
+=======
+- Media stored using MinIO object storage
+>>>>>>> bb4f42a37edca08f2781aee283a64f9d5aaa3c3f
+>>>>>>> main
 - Lightweight, simple, and visually clean web UI
 - Basic processing status (processing / completed / failed)
 
@@ -69,23 +95,55 @@ Optional / Supporting:
       |
       | 1) Upload media + prompt
       v
+<<<<<<< HEAD
+[FastAPI Backend Service]
+=======
+<<<<<<< HEAD
 [Node.js API Server]
+>>>>>>> main
       |
-      | 2) Store raw files
+      | 2) Store uploaded media
       v
-[Amazon S3]  <--- input files (photos/videos)
+[MinIO Object Storage]  <--- input files (photos/videos)
       |
       | 3) Create processing job
       v
-[n8n Workflow Orchestrator]
+[Ai Processing Service]
       |
-      | 4) Run FFmpeg processing
+      | 4) - Scene detection
+      |    - Highlight selection
+      |    - Clip extraction
       v
-[FFmpeg Processing Worker]
+[FFmpeg / MoviePy]
       |
-      | 5) Export highlight video
+      | 5) Video assembly
       v
+<<<<<<< HEAD
+[MinIO Output Storage]  <--- output MP4
+=======
 [Amazon S3]  <--- output MP4
+=======
+[FastAPI Backend Service]
+      |
+      | 2) Store uploaded media
+      v
+[MinIO Object Storage]  <--- input files (photos/videos)
+      |
+      | 3) Create processing job
+      v
+[Ai Processing Service]
+      |
+      | 4) - Scene detection
+      |    - Highlight selection
+      |    - Clip extraction
+      v
+[FFmpeg / MoviePy]
+      |
+      | 5) Video assembly
+      v
+[MinIO Output Storage]  <--- output MP4
+>>>>>>> bb4f42a37edca08f2781aee283a64f9d5aaa3c3f
+>>>>>>> main
       |
       | 6) Provide download link
       v
@@ -94,26 +152,83 @@ Optional / Supporting:
 
 ---
 ## Current Sprint Status
+<<<<<<< HEAD
+Sprint Goal
+=======
+<<<<<<< HEAD
+>>>>>>> main
 
-Sprint Goal:
-Implement core upload → processing pipeline UI and job flow.
-
-Completed:
-- Next.js frontend setup
-- Initial upload UI
-- Basic project architecture defined
-
-In Progress:
-- S3 upload integration
-
-
-Next:
-- n8n + FFmpeg processing pipeline
+Implement the core upload → AI processing → video export pipeline.
 ---
-## Installation Steps
 
-(To be added later)
+Completed
 
+<<<<<<< HEAD
+=======
+=======
+Sprint Goal
+
+Implement the core upload → AI processing → video export pipeline.
+---
+
+Completed
+
+>>>>>>> main
+Next.js frontend interface
+
+File upload UI
+
+FastAPI backend service
+
+Basic highlight generation pipeline
+
+FFmpeg video processing integration
+---
+
+In Progress
+
+Scene detection integration
+
+Highlight ranking improvements
+
+Output video generation pipeline
+---
+
+Next Steps
+
+Improve scene ranking logic
+
+Add job queue for video processing
+
+Improve frontend progress feedback
+
+Integrate storage fully with MinIO
+
+
+## Installation (Development)
+
+Clone the repository:
+
+git clone <repo-url>
+cd AIvideoGenerator
+---
+Start the WebAPP
+* cd AIvideoGenerator
+* npm start dev (Should start both backend and frontend)
+---
+
+Frontend runs on:
+
+http://localhost:3000
+
+Backend runs on:
+
+http://127.0.0.1:8000
+---
+<<<<<<< HEAD
+=======
+>>>>>>> bb4f42a37edca08f2781aee283a64f9d5aaa3c3f
+>>>>>>> main
 # Team Name 
 
 Hydro 
