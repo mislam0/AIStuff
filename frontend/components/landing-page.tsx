@@ -61,7 +61,16 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
               variant="outline"
               className="border-border hover:border-accent hover:text-accent hover:bg-transparent transition-colors"
             >
-              <Link href="/about">About This Project</Link>
+              <Link href="/history">My Videos</Link>
+            </Button>
+
+            <Button
+              asChild
+              size="sm"
+              variant="outline"
+              className="border-border hover:border-accent hover:text-accent hover:bg-transparent transition-colors"
+            >
+              <Link href="/about">About</Link>
             </Button>
           </div>
 

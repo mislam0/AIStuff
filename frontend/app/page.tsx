@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { LandingPage } from "@/components/landing-page";
 import { UploadPage } from "@/components/upload-page";
 import { ProcessingPage } from "@/components/processing-page";
@@ -41,7 +42,9 @@ export default function Home() {
       setState("result"); // SHOW RESULT WHEN DONE
     } catch (error) {
       console.error(error);
-      alert("Error generating highlight");
+      toast.error("Error generating highlight", {
+        description: "Please check your connection and try again.",
+      });
       setState("upload");
     }
   };
