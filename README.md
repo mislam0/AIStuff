@@ -13,201 +13,114 @@ Upload → Analysis → Simple Cut → Export
 
 ## Links
 (To be added later)
+---
+## Features (MVP)
+
+- Upload up to 10 media files (images and videos)
+- AI-based segment scoring and highlight selection
+- Automatic 30–60 second video generation
+- Image-to-video clip conversion
+- Video normalization and concatenation
+- Downloadable MP4 output
+- Object storage using MinIO
+- Processing progress tracking
+- Video gallery (view, download, delete)
+- Simple and clean web interface
 
 ---
 
-## Technologies
+## Tech Stack
 
-Frontend:
-- React / Next.js
+### Frontend
+- Next.js (React)
 - TypeScript
-- HTML
-- CSS
+- Tailwind CSS
 
-<<<<<<< HEAD
-Backend:
-- FastAPI
+### Backend
+- FastAPI (Python)
 
-Video Processing
+### Video Processing
 - FFmpeg
-- MoviePy
-=======
-<<<<<<< HEAD
-Backend / Processing:
-- Node.js
-- FFmpeg
-=======
-Backend:
-- FastAPI
 
-Video Processing
-- FFmpeg
-- MoviePy
->>>>>>> bb4f42a37edca08f2781aee283a64f9d5aaa3c3f
->>>>>>> main
+### AI / Processing
+- Custom ML model (segment scoring)
+- Feature extraction pipeline
 
-Automation / Workflow:
-- n8n
-
-Storage:
-- MinIO
-
-Optional / Supporting:
-- Supabase (authentication and metadata)
-
----
-
-## Working Features (MVP Scope)
-
-- Upload up to 10 media files (photos and/or videos)
-- Enforced maximum file size per upload
-- Text prompt input for AI-guided editing
-- Automatic generation of 30–60 second highlight video
-- Silent video output (audio not included in MVP)
-- Download/export generated video
-<<<<<<< HEAD
-- Media stored using MinIO object storage
-=======
-<<<<<<< HEAD
-- Storage of input and output media in Amazon S3
-=======
-- Media stored using MinIO object storage
->>>>>>> bb4f42a37edca08f2781aee283a64f9d5aaa3c3f
->>>>>>> main
-- Lightweight, simple, and visually clean web UI
-- Basic processing status (processing / completed / failed)
-
----
-
-## MVP Non-Goals
-- No audio processing or music syncing
-- No captions or text overlays
-- No advanced AI scene understanding
-- No user customization beyond a simple text prompt
-- No videos longer than the 30-60 second output range
+### Storage
+- MinIO (S3-compatible object storage)
 
 ---
 
 ## Architecture Overview (MVP)
 
 ```text
-[React / Next.js Web App]
-      |
-      | 1) Upload media + prompt
-      v
-<<<<<<< HEAD
-[FastAPI Backend Service]
-=======
-<<<<<<< HEAD
-[Node.js API Server]
->>>>>>> main
-      |
-      | 2) Store uploaded media
-      v
-[MinIO Object Storage]  <--- input files (photos/videos)
-      |
-      | 3) Create processing job
-      v
-[Ai Processing Service]
-      |
-      | 4) - Scene detection
-      |    - Highlight selection
-      |    - Clip extraction
-      v
-[FFmpeg / MoviePy]
-      |
-      | 5) Video assembly
-      v
-<<<<<<< HEAD
-[MinIO Output Storage]  <--- output MP4
-=======
-[Amazon S3]  <--- output MP4
-=======
-[FastAPI Backend Service]
-      |
-      | 2) Store uploaded media
-      v
-[MinIO Object Storage]  <--- input files (photos/videos)
-      |
-      | 3) Create processing job
-      v
-[Ai Processing Service]
-      |
-      | 4) - Scene detection
-      |    - Highlight selection
-      |    - Clip extraction
-      v
-[FFmpeg / MoviePy]
-      |
-      | 5) Video assembly
-      v
-[MinIO Output Storage]  <--- output MP4
->>>>>>> bb4f42a37edca08f2781aee283a64f9d5aaa3c3f
->>>>>>> main
-      |
-      | 6) Provide download link
-      v
-[React / Next.js Web App]
+[Next.js Frontend]
+        |
+        | Upload media + prompt
+        v
+[FastAPI Backend]
+        |
+        | Store files
+        v
+[MinIO Storage]
+        |
+        | Process request
+        v
+[AI Processing Pipeline]
+        |
+        | - Feature extraction
+        | - Segment scoring
+        | - Clip selection
+        v
+[FFmpeg Processing]
+        |
+        | Assemble final video
+        v
+[MinIO Storage]
+        |
+        | Return video URL
+        v
+[Frontend Display + Download]
 ```
 
 ---
-## Current Sprint Status
-<<<<<<< HEAD
-Sprint Goal
-=======
-<<<<<<< HEAD
->>>>>>> main
 
-Implement the core upload → AI processing → video export pipeline.
+## Current Status
+
+### Completed
+- Upload interface
+- FastAPI backend service
+- Highlight generation pipeline
+- FFmpeg processing integration
+- MinIO storage integration
+- Video preview and download UI
+- Video gallery (list and delete)
+
+### In Progress
+- Scene detection improvements
+- Highlight ranking accuracy
+- Progress UI improvements
+
+### Planned
+- Background job queue for processing
+- Improved AI scoring model
+- Optional user authentication
+- Metadata storage
+
 ---
 
-Completed
+## Non-Goals (MVP)
 
-<<<<<<< HEAD
-=======
-=======
-Sprint Goal
+- Audio processing or music syncing
+- Subtitles or overlays
+- Advanced AI scene understanding
+- Full user customization
 
-Implement the core upload → AI processing → video export pipeline.
 ---
-
-Completed
-
->>>>>>> main
-Next.js frontend interface
-
-File upload UI
-
-FastAPI backend service
-
-Basic highlight generation pipeline
-
-FFmpeg video processing integration
----
-
-In Progress
-
-Scene detection integration
-
-Highlight ranking improvements
-
-Output video generation pipeline
----
-
-Next Steps
-
-Improve scene ranking logic
-
-Add job queue for video processing
-
-Improve frontend progress feedback
-
-Integrate storage fully with MinIO
-
 
 ## Installation (Development)
 
-Clone the repository:
+### Clone the repository
 
 git clone <repo-url>
 cd AIvideoGenerator
@@ -217,18 +130,14 @@ Start the WebAPP
 * npm start dev (Should start both backend and frontend)
 ---
 
-Frontend runs on:
+## Local URLs
 
-http://localhost:3000
+- Frontend: http://localhost:3000  
+- Backend API: http://127.0.0.1:8000  
+- API Docs: http://127.0.0.1:8000/docs  
+- MinIO Console: http://127.0.0.1:9001  
 
-Backend runs on:
-
-http://127.0.0.1:8000
 ---
-<<<<<<< HEAD
-=======
->>>>>>> bb4f42a37edca08f2781aee283a64f9d5aaa3c3f
->>>>>>> main
 # Team Name 
 
 Hydro 

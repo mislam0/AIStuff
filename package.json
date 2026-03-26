@@ -2,20 +2,15 @@
   "name": "ai-video-generator",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run frontend\" \"npm run backend\" \"npm run minio\"",
-    "frontend": "cd frontend && npm run dev",
-    "backend": "cd ai_service && python -m uvicorn server:app --reload",
-    "minio": "cd storage && .\\minio.exe server .\\minio-data --console-address :9001"
-  },
+  "dev": "concurrently \"npm run frontend\" \"npm run backend\" \"npm run minio\"",
+  "frontend": "cd frontend && npm run dev",
+  "backend": "cd ai_service && python -m uvicorn server:app --reload",
+  "minio": "cd storage && .\\minio.exe server .\\minio-data --console-address :9001"
+},
   "dependencies": {
-    "@vercel/analytics": "^2.0.1",
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "lucide-react": "^0.577.0",
-    "multer": "^2.1.0",
-    "next": "^16.1.7",
-    "react": "^19.2.4",
-    "sonner": "^2.0.7"
+    "multer": "^2.1.0"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

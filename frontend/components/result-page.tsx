@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import VideoGallery from "./video-gallery";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { ArrowLeft, Download, RefreshCw, Sparkles, History } from "lucide-react";
+import { ArrowLeft, Download, RefreshCw, Sparkles } from "lucide-react";
 
 interface ResultPageProps {
   videoUrl: string | null;
@@ -111,17 +110,8 @@ export function ResultPage({ videoUrl, onBack, onRegenerate }: ResultPageProps) 
             Not happy with the result? Try regenerating for a different edit.
           </p>
           {/* VIDEO GALLERY */}
-          <div className="pt-8 border-t border-border space-y-4">
-            <VideoGallery showTitle={true} />
-            
-            <div className="text-center pt-4">
-              <Button variant="outline" asChild>
-                <Link href="/history">
-                  <History className="w-4 h-4 mr-2" />
-                  View All Videos
-                </Link>
-              </Button>
-            </div>
+          <div className="pt-8 border-t border-border">
+            <VideoGallery />
           </div>
         </div>
       </main>
