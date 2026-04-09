@@ -4,7 +4,7 @@
   "scripts": {
   "dev": "concurrently \"npm run frontend\" \"npm run backend\" \"npm run minio\"",
   "frontend": "cd frontend && npm run dev",
-  "backend": "cd ai_service && python -m uvicorn server:app --reload",
+  "backend": "python -m uvicorn ai_service.server:app --reload",
   "minio": "cd storage && .\\minio.exe server .\\minio-data --console-address :9001"
 },
   "dependencies": {

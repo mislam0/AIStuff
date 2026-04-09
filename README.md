@@ -1,24 +1,26 @@
 # AIvideoGenerator
 
 ## Description
-This project is an AI-powered Highlight Video Generator designed to help nonprofits and community organizations quickly create short-form promotional videos. The MVP allows users to upload photos and videos, provide a short text prompt describing the desired style, and receive a polished 30–60 second highlight video.
+This project is an AI-powered Highlight Video Generator designed to help nonprofits and community organizations quickly create short-form promotional videos. The MVP allows users to upload photos and videos, provide a short text prompt describing the desired style, and receive a polished 30-60 second highlight video.
 
 The system works similarly to CapCut’s auto-cut feature. It is not a chatbot. Users simply upload media and provide a description, and the system generates a silent highlight video that can be downloaded in common formats such as MP4.
 
 The primary MVP workflow is:
 
-Upload → Analysis → Simple Cut → Export
+Upload -> Analysis -> Simple Cut -> Export
 
 ---
 
 ## Links
 (To be added later)
+
 ---
+
 ## Features (MVP)
 
 - Upload up to 10 media files (images and videos)
 - AI-based segment scoring and highlight selection
-- Automatic 30–60 second video generation
+- Automatic 30-60 second video generation
 - Image-to-video clip conversion
 - Video normalization and concatenation
 - Downloadable MP4 output
@@ -94,18 +96,26 @@ Upload → Analysis → Simple Cut → Export
 - FFmpeg processing integration
 - MinIO storage integration
 - Video preview and download UI
-- Video gallery (list and delete)
+- Video gallery (list, view, download, delete)
+- Backend API testing for core routes
+- Metadata validation and file path protection
+- Edit endpoint testing
+- Highlight generation endpoint testing
 
 ### In Progress
 - Scene detection improvements
 - Highlight ranking accuracy
 - Progress UI improvements
+- Expanding automated test coverage
+- README and project documentation improvements
 
 ### Planned
 - Background job queue for processing
 - Improved AI scoring model
 - Optional user authentication
 - Metadata storage
+- Frontend testing
+- Additional integration tests
 
 ---
 
@@ -127,7 +137,7 @@ cd AIvideoGenerator
 ---
 Start the WebAPP
 * cd AIvideoGenerator
-* npm start dev (Should start both backend and frontend)
+* npm run dev (Should start both backend and frontend)
 ---
 
 ## Local URLs
@@ -138,6 +148,46 @@ Start the WebAPP
 - MinIO Console: http://127.0.0.1:9001  
 
 ---
+
+## Testing
+
+The project includes backend API tests to help verify that core routes are working correctly during development.
+
+### Current Test Coverage
+
+- Root and progress endpoints
+- Video list and delete endpoints
+- Metadata validation and safe file path checking
+- Video edit endpoint behavior
+- Feature extraction output format
+- Highlight generation flow
+- Image upload handling
+- Multiple file upload handling
+- Edge cases for invalid or missing media
+
+### Testing Approach
+
+The current tests focus on backend API behavior and processing flow.
+
+To keep testing simple and fast:
+
+- FFmpeg processing functions are mocked
+- MinIO storage calls are mocked
+- Uploaded files are simulated in memory
+
+This makes it possible to test route behavior without running full video processing for every test.
+
+### Test File
+
+Backend tests are currently located in:
+
+
+tests/test_api.py
+## Run Tests
+- python -m pytest tests/test_api.py
+- For more detailed version : python -m pytest tests/test_api.py -v
+- To run all backend tests : python -m pytest
+
 # Team Name 
 
 Hydro 

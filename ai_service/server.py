@@ -4,16 +4,19 @@ from fastapi import FastAPI, UploadFile, Form, File, HTTPException
 from typing import List
 import shutil
 import os
-import joblib
 import uuid
 
-from video.ffmpeg_editor import FFmpegEditor
-from ai.feature_extraction import extract_features_from_clip
-from storage.minio_client import upload_file, list_videos, delete_video
+from dotenv import load_dotenv
+
+
+from ai_service.video.ffmpeg_editor import FFmpegEditor
+from ai_service.ai.feature_extraction import extract_features_from_clip
+from ai_service.storage.minio_client import upload_file, list_videos, delete_video
+from ai_service.ai.llm_cut_engine import get_llm_weights, score_segment
 
 
 app = FastAPI()
-
+load_dotenv()
 
 # GLOBAL PROGRESS
 
@@ -30,14 +33,6 @@ MAX_VIDEO_LENGTH = 60
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
-
-
-# LOAD MODEL SAFELY
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "highlight_model.pkl")
-
-model = joblib.load(MODEL_PATH)
 
 
 # CORS (for React frontend)
@@ -116,63 +111,91 @@ async def create_highlight(
             segments = list(range(0, duration, segment_length * sampling_rate))
             total_segments = len(segments)
 
-            segment_scores = []
+            all_features = []
+            segment_data = []
 
-            # SCORE SEGMENTS
+            # EXTRACT FEATURES
            
             for seg_idx, t in enumerate(segments):
                 print(f"Processing segment {seg_idx+1}/{total_segments}")
 
                 start = t
                 end = min(t + segment_length, duration)
+                try:
+                    features = extract_features_from_clip(
+                        input_path,
+                        start,
+                        end
+                    )
+                except Exception as e:
+                    print("Feature extraction failed:", e)
+                    continue
 
-                features = extract_features_from_clip(
-                    input_path,
-                    start,
-                    end
-                )
+                all_features.append(features)
+                segment_data.append({
+                    "features": features,
+                    "src_path": input_path,
+                    "start": start,
+                    "end": end,
+                })
 
-                score = model.predict_proba([features])[0][1]
-
-                segment_scores.append((score, input_path, start, end))
-
-                # Update progress (0–50%)
+                # Update progress (0–40%)
                 file_progress = (seg_idx + 1) / total_segments
-                overall = ((file_idx + file_progress) / total_files) * 50
-
+                overall = ((file_idx + file_progress) / total_files) * 40
                 progress_status["progress"] = int(overall)
 
             
+            # LLM SCORING (single call per video, or defaults if no prompt)
+
+            progress_status["progress"] = 40
+
+            llm_result = get_llm_weights(prompt, all_features) if all_features else None
+            print(f"Scoring source: {llm_result['source'] if llm_result else 'none'}")
+
+            progress_status["progress"] = 45
+
+            # SCORE SEGMENTS with LLM weights
+            if llm_result:
+                for seg in segment_data:
+                    seg["score"] = score_segment(
+                        seg["features"],
+                        llm_result["weights"],
+                        llm_result["min_thresholds"],
+                    )
+            else:
+                for seg in segment_data:
+                    seg["score"] = 0.0
+
             # SORT BEST SEGMENTS
             
-            segment_scores.sort(reverse=True, key=lambda x: x[0])
+            segment_data.sort(reverse=True, key=lambda x: x["score"])
 
             max_segments = MAX_VIDEO_LENGTH // segment_length
-            top_segments = segment_scores[:max_segments]
+            top_segments = segment_data[:max_segments]
 
             
             # TRIM BEST SEGMENTS
             
-            for trim_idx, (score, src_path, start, end) in enumerate(top_segments):
+            for trim_idx, seg in enumerate(top_segments):
+
+                if seg["score"] <= 0:
+                    continue
 
                 seg_path = os.path.join(
                     OUTPUT_FOLDER,
                     f"seg_{uuid.uuid4()}.mp4"
                 )
 
-                # Fast trimming (no re-encode)
                 FFmpegEditor.trim_clip(
-                    src_path,
+                    seg["src_path"],
                     seg_path,
-                    start,
-                    end,
-                    
+                    seg["start"],
+                    seg["end"],
                 )
 
-                scored_segments.append((score, seg_path))
+                scored_segments.append((seg["score"], seg_path))
 
                 trim_progress = (trim_idx + 1) / len(top_segments)
-
                 progress_status["progress"] = 50 + int(trim_progress * 20)
 
     scored_segments.sort(reverse=True, key=lambda x: x[0])
@@ -370,10 +393,12 @@ async def get_metadata(filepath: str):
     metadata = FFmpegEditor.get_video_metadata(abs_path)
 
     return metadata
+
 # VIDEO LISTING ENDPOINT
 @app.get("/videos")
 def get_videos():
     return list_videos()
+
 @app.delete("/video")
 def delete_video_endpoint(object_name: str):
     return delete_video(object_name)

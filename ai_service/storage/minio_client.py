@@ -14,22 +14,35 @@ client = Minio(
     secure=False
 )
 
+_bucket_initialized = False
 
-def ensure_bucket_public():
 
-    policy = {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Effect": "Allow",
-                "Principal": {"AWS": ["*"]},
-                "Action": ["s3:GetObject"],
-                "Resource": [f"arn:aws:s3:::{BUCKET_NAME}/*"]
-            }
-        ]
-    }
+def _ensure_bucket():
+    global _bucket_initialized
+    if _bucket_initialized:
+        return
 
-    client.set_bucket_policy(BUCKET_NAME, json.dumps(policy))
+    try:
+        if not client.bucket_exists(BUCKET_NAME):
+            client.make_bucket(BUCKET_NAME)
+
+        policy = {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {"AWS": ["*"]},
+                    "Action": ["s3:GetObject"],
+                    "Resource": [f"arn:aws:s3:::{BUCKET_NAME}/*"]
+                }
+            ]
+        }
+        client.set_bucket_policy(BUCKET_NAME, json.dumps(policy))
+        _bucket_initialized = True
+        print("[minio] Bucket ready")
+
+    except S3Error as err:
+        print(f"[minio] Bucket init error: {err}")
 
 
 def list_videos():
@@ -48,9 +61,9 @@ def list_videos():
     except S3Error as err:
         print("MinIO error:", err)
         return []
-    
-def delete_video(object_name):
 
+
+def delete_video(object_name):
     try:
         client.remove_object(BUCKET_NAME, object_name)
         return {"message": "Video deleted"}
@@ -58,15 +71,11 @@ def delete_video(object_name):
     except S3Error as err:
         print("MinIO delete error:", err)
         return {"error": "Delete failed"}
-    
+
+
 def upload_file(file_path, object_name):
-
     try:
-        if not client.bucket_exists(BUCKET_NAME):
-            client.make_bucket(BUCKET_NAME)
-
-        # ensure bucket is public
-        ensure_bucket_public()
+        _ensure_bucket()
 
         client.fput_object(
             BUCKET_NAME,

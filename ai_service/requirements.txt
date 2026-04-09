@@ -7,3 +7,5 @@ numpy
 scikit-learn
 joblib
 minio
+python-dotenv
+pytest
